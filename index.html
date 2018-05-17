@@ -56,23 +56,26 @@
 	           <div class="panel-heading">
 	               <h3 class="panel-title">Codigo Fuente</h3>
 	           </div>
-	    <div class="panel-body">
-	        <form role="form">
-		        <textarea id="sourceCode"
-		          class="form-control source-code"
-		          style="margin-bottom:5px;"
-		          rows="20"
-		          tab-support
-		          select-line
-		          ng-model="code">//aca iria el codigo fuente
-                </textarea>
-		        <div id="barraCompilar">
-		          <h5 class="col-md-6" id="labeldirinicio">Direccion de Inicio:</h5>
-		          <textarea id="dirInicio" class="col-md-2" rows="1" cols="2" maxlength="2"></textarea>
-		          <button type="button" class="btn btn-default col-md-4" id="compilar">Compilar</button>
-		        </div> 
-	        </form>
-	  </div>
+        	    <div class="panel-body">
+        	        <form role="form">
+        		        <textarea id="sourceCode"
+        		          class="form-control source-code"
+        		          style="margin-bottom:5px;"
+        		          rows="20"
+        		          tab-support
+        		          select-line
+        		          ng-model="code">//aca iria el codigo fuente
+                        </textarea>
+        		        <div id="barraCompilar">
+        		          <h5 class="col-md-6" id="labeldirinicio">Direccion de Inicio:</h5>
+        		          <textarea id="dirInicio" class="col-md-2" rows="1" cols="2" maxlength="2">
+                          </textarea>
+        		          <button type="button" class="btn btn-default col-md-4" id="compilar">
+                            Compilar
+                          </button>
+        		        </div> 
+        	        </form>
+        	  </div>
 	</div>
     </div>
 		<div id="contenedorCompilado" class="col-xs-12 col-md-3">
