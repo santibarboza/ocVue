@@ -198,3 +198,20 @@ font-weight: 400;
     font-weight: 900;
     font-size: initial;
 }
+.h5.tablaMemoria.ultimaMemoria {
+    color: #3041a1;
+    font-weight: 900;
+    font-size: initial;
+}
+.h5.tablaMemoria.pcMemoria {
+    color: white;
+    font-weight: 900;
+    font-size: initial;
+    background-color: #f34040;
+}
+.h5.tablaMemoria.irMemoria {
+    color: white;
+    font-weight: 900;
+    font-size: initial;
+    background-color: #4062f3;;
+}

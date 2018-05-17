@@ -6,8 +6,7 @@ Vue.component('registro-app',{
   computed:{
       getTitulo: function(){
         return "Registro R"+this.index.toString(16).toUpperCase();
-      },
-      getUltimoCambio: function(){return this.ultimoCambio;}
+      }
   },
   data:function(){
       return {
@@ -18,11 +17,6 @@ Vue.component('registro-app',{
     EventBus.$on('ultimoCambioRegistro', function (cambios) {
       this.ultimoCambio=cambios.includes(this.index) ;
     }.bind(this));
-  },
-  methods:{
-    setUltimoCambio:function(status){
-      this.ultimoCambio=status;
-    }
   }  
 });
 
@@ -40,6 +34,63 @@ Vue.component('registro-table-app',{
   }  
 });
 
+Vue.component('memoria-app',{
+  template: '#memoriaTemplate',
+  props: ['memoria', 'index'],
+  computed:{
+      getTitulo: function(){
+        return "Memoria: Direccion 0x"+this.index.toString(16).toUpperCase();
+      },
+      clasesMemoria:function(){
+        return {
+          ultimaMemoria: this.ultimoCambio,
+          pcMemoria: this.esPC,
+          irMemoria: this.esIR,
+        }
+      },
+  },
+  data:function(){
+      return {
+          ultimoCambio:false,
+          esPC:false,
+          esIR:false
+      }
+  },
+  created: function () {
+    EventBus.$on('ultimoCambioMemoria', function (cambios) {
+      this.ultimoCambio=cambios.includes(this.index) ;
+    }.bind(this));
+    EventBus.$on('nuevopc', function (pc) {
+      this.esPC=(pc==this.index)||(pc+1==this.index);
+    }.bind(this));
+    EventBus.$on('nuevoir', function (ir) {
+      this.esIR=(ir==this.index)||(ir+1==this.index);
+    }.bind(this));
+  }  
+});
+
+Vue.component('memoria-table-app',{
+  template: '#memoriaTableTemplate',
+  props: ['memorias','cantxfilas'], 
+  computed:{
+      cantfilas: function(){
+        return this.memorias.length/this.cantxfilas;
+      }
+  },
+  methods:{
+    getMemoria: function(i,j){
+      var indice=this.getIndex(i,j);
+      return this.memorias[indice];
+    },
+    getIndex: function(i,j){
+      var fila=i-1;
+      var columna=j-1;
+      var indice=fila*this.cantxfilas+columna; 
+      return indice;
+    }
+  }
+});
+
 Vue.component('panelheading',{
   template: '#headingTemplate',
   props: ['targets', 'titulo'],
@@ -52,62 +103,20 @@ Vue.component('panelheading',{
       }
   }  
 });
-/*
-Vue.component('app-panel-registros',{
-    template:"#panelRegistrosTemplate",
-    data: function () {
-      return {
-              registros:[
-            {
-              nombre:"R0",
-              contenido:"00"
-            },      
-            {
-              nombre:"R1",
-              contenido:"00"
-            },      
-            {
-              nombre:"R2",
-              contenido:"00"
-            },
-          ]
-      }
-    }
-});
-*/
 var vm=new Vue({
   el:"#panelIde",
+  created:function () {
+    var i;
+    for (i = 0; i < 16; i++) {
+      this.registros.push({contenido:"00"});
+    } 
+    for (i = 0; i < 256; i++) {
+      this.memorias.push({contenido:"00"});
+    }
+  },
   data:{
-      registros:
-        [
-            { contenido:"00" },      
-            { contenido:"00" },      
-            { contenido:"00" },
-            { contenido:"00" }, 
-            { contenido:"00" },      
-            { contenido:"00" },      
-            { contenido:"00" },
-            { contenido:"00" }, 
-            { contenido:"00" },      
-            { contenido:"00" },      
-            { contenido:"00" },
-            { contenido:"00" }, 
-            { contenido:"00" },      
-            { contenido:"00" },      
-            { contenido:"00" },
-            { contenido:"00" }
-        ],
-      memoria:
-        [
-            {
-              direccion:"00",
-              contenido:"00"
-            },
-            {
-              direccion:"01",
-              contenido:"00"
-            }
-        ]
+      registros:[],
+      memorias:[]
   },
   methods:{
       updateRegistros: function(cambios){
@@ -118,6 +127,21 @@ var vm=new Vue({
             keys.push(cambio.key);
         });
         EventBus.$emit('ultimoCambioRegistro', keys);
+    },
+    updateMemoria: function(cambios){
+        var memorias=this.memorias;
+        var keys=[];
+        $.each(cambios, function( index, cambio ) {
+            memorias[cambio.key].contenido=cambio.value;
+            keys.push(cambio.key);
+        });
+        EventBus.$emit('ultimoCambioMemoria', keys);
+    },
+    updatePC: function(pc){
+        EventBus.$emit('nuevopc', pc);
+    },
+    updateIR: function(ir){
+        EventBus.$emit('nuevoir', ir);
     }
   }
 });

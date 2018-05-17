@@ -112,18 +112,8 @@
                 <div class="panel panel-default" id="panelMemoria">
                     <panelheading targets="#bodyMemoria" titulo="Memoria del Sistema"></panelheading>
                     <div class="panel-body collapse" id="bodyMemoria">
-                        <table class="table table-bordered" id="tablaMemoria">
-                            <tbody>
-                                <tr>
-                                    <th class="h5 tablaMemoria" id="memoria00" title="Memoria: Direccion 0x00"
-                                        style="padding:0px;text-align:center;">00</th>
-                                </tr>
-                                <tr>  
-                                    <th class="h5 tablaMemoria" id="memoria10" title="Memoria: Direccion 0x10"
-                                        style="padding:0px;text-align:center;">00</th>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <memoria-table-app :memorias="memorias" :cantxfilas="16" id="tablaMemoria"> 
+                        </memoria-table-app>
                     </div>
                 </div>
                 <div class="panel panel-default" id="panelLogs">
@@ -197,7 +187,7 @@
             data-toggle="collapse" :data-target="getTarget" >-</button>
         </div>
     </script>
-    <!--Panel Registros-->
+    <!--Registro-->
     <script type="text/x-template" id="registroTemplate">
         <th
             class="h5 tablaRegistro" :class="{Ultimo: ultimoCambio}" :title="getTitulo">
@@ -205,6 +195,7 @@
         </th>        
     </script>
 
+    <!--Tabla Registros-->
     <script type="text/x-template" id="registroTableTemplate">
         <table class="table table-bordered">
             <thead><tr>
@@ -220,6 +211,30 @@
             </tr></tbody>
         </table>
     </script>       
+   
+    <!--Memoria-->
+    <script type="text/x-template" id="memoriaTemplate">
+        <th 
+            class="h5 tablaMemoria"  :title="getTitulo" :class="clasesMemoria"
+            style="padding:0px;text-align:center;">
+                {{memoria.contenido}}
+        </th>      
+    </script>
+
+    <!--Tabla Memoria-->
+    <script type="text/x-template" id="memoriaTableTemplate">
+        <table class="table table-bordered">
+            <tbody>
+                <tr v-for="i in cantxfilas">
+                    <th is="memoria-app" v-for="j in cantfilas" 
+                        style="padding:0px;text-align:center;"
+                        :memoria="getMemoria(i,j)" :index="getIndex(i,j)" >
+                    </th>
+                </tr >
+            </tbody>
+        </table>
+    </script>       
+    
 
     <!--Funciones-->
     
