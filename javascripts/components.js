@@ -1,12 +1,28 @@
-
+var EventBus = new Vue;
 
 Vue.component('registro-app',{
   template: '#registroTemplate',
   props: ['registro', 'index'],
   computed:{
       getTitulo: function(){
-        return "Registro "+this.registro.nombre;
+        return "Registro R"+this.index.toString(16).toUpperCase();
+      },
+      getUltimoCambio: function(){return this.ultimoCambio;}
+  },
+  data:function(){
+      return {
+          ultimoCambio:false
       }
+  },
+  created: function () {
+    EventBus.$on('ultimoCambioRegistro', function (cambios) {
+      this.ultimoCambio=cambios.includes(this.index) ;
+    }.bind(this));
+  },
+  methods:{
+    setUltimoCambio:function(status){
+      this.ultimoCambio=status;
+    }
   }  
 });
 
@@ -14,17 +30,12 @@ Vue.component('registro-app',{
 Vue.component('registro-table-app',{
   template: '#registroTableTemplate',
   props: ['registros','inicio','fin'],
-  computed:{
-      getTitulo: function(){
-        return "Registro "+this.registro.nombre;
-      },
-      getTitulo: function(){
-        return "Registro "+this.registro.nombre;
-      }
-  },
   methods:{
       enRango: function(i){
         return i>=this.inicio && i<this.fin;
+      },
+      getTitulo: function(i){
+        return "R"+i.toString(16).toUpperCase();
       }
   }  
 });
@@ -69,70 +80,22 @@ var vm=new Vue({
   data:{
       registros:
         [
-            {
-              nombre:"R0",
-              contenido:"00"
-            },      
-            {
-              nombre:"R1",
-              contenido:"00"
-            },      
-            {
-              nombre:"R2",
-              contenido:"00"
-            },
-            {
-              nombre:"R3",
-              contenido:"00"
-            },      
-            {
-              nombre:"R4",
-              contenido:"03"
-            },      
-            {
-              nombre:"R5",
-              contenido:"00"
-            },
-            {
-              nombre:"R6",
-              contenido:"00"
-            },      
-            {
-              nombre:"R7",
-              contenido:"00"
-            },      
-            {
-              nombre:"R8",
-              contenido:"00"
-            },
-            {
-              nombre:"R9",
-              contenido:"00"
-            },      
-            {
-              nombre:"RA",
-              contenido:"00"
-            },      
-            {
-              nombre:"RB",
-              contenido:"00"
-            },
-            {
-              nombre:"RC",
-              contenido:"00"
-            },      
-            {
-              nombre:"RD",
-              contenido:"03"
-            },      
-            {
-              nombre:"RE",
-              contenido:"00"
-            },
-            {
-              nombre:"RF",
-              contenido:"00"
-            }
+            { contenido:"00" },      
+            { contenido:"00" },      
+            { contenido:"00" },
+            { contenido:"00" }, 
+            { contenido:"00" },      
+            { contenido:"00" },      
+            { contenido:"00" },
+            { contenido:"00" }, 
+            { contenido:"00" },      
+            { contenido:"00" },      
+            { contenido:"00" },
+            { contenido:"00" }, 
+            { contenido:"00" },      
+            { contenido:"00" },      
+            { contenido:"00" },
+            { contenido:"00" }
         ],
       memoria:
         [
@@ -145,6 +108,17 @@ var vm=new Vue({
               contenido:"00"
             }
         ]
+  },
+  methods:{
+      updateRegistros: function(cambios){
+        var registros=this.registros;
+        var keys=[];
+        $.each(cambios, function( index, cambio ) {
+            registros[cambio.key].contenido=cambio.value;
+            keys.push(cambio.key);
+        });
+        EventBus.$emit('ultimoCambioRegistro', keys);
+    }
   }
 });
 

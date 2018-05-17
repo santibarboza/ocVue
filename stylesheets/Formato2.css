@@ -193,3 +193,8 @@ font-weight: 400;
     padding-bottom:3px;
     text-align:center;
 }
+.h5.tablaRegistro.Ultimo {
+    color: #3041a1;
+    font-weight: 900;
+    font-size: initial;
+}

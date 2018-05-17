@@ -200,7 +200,7 @@
     <!--Panel Registros-->
     <script type="text/x-template" id="registroTemplate">
         <th
-            class="h5 tablaRegistro" :title="getTitulo">
+            class="h5 tablaRegistro" :class="{Ultimo: ultimoCambio}" :title="getTitulo">
                 {{registro.contenido}}       
         </th>        
     </script>
@@ -210,7 +210,7 @@
             <thead><tr>
                 <th v-for="(registro,i) in registros" v-if="enRango(i)" 
                 style="padding-top:3px;padding-bottom:3px;text-align:center;">
-                    {{registro.nombre}}
+                    {{getTitulo(i)}}
                 </th>
             </tr></thead>
             <tbody> <tr>
