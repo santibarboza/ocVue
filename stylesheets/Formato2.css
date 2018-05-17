@@ -183,3 +183,13 @@ font-weight: 400;
     text-align: center;
     height: 40px;
 }
+.h5.tablaRegistro {
+    padding-top: 3px;
+    padding-bottom: 3px;
+    text-align: center;
+}
+.table > thead > tr > th.registroH{
+    padding-top:3px;
+    padding-bottom:3px;
+    text-align:center;
+}

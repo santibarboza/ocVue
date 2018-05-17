@@ -103,36 +103,10 @@
                 <div class="panel panel-default" id="panelRegistros">
                     <panelheading targets="#bodyRegistro" titulo="Registros del Procesador"></panelheading>
                     <div class="panel-body collapse in" id="bodyRegistro">
-                        <table class="table table-bordered"id="row1">
-                            <thead><tr>
-                                <th v-for="(registro,i) in registros" v-if="i>=0 && i<8" 
-                                style="padding-top:3px;padding-bottom:3px;text-align:center;">
-                                    {{registro.nombre}}
-                                </th>
-                            </tr></thead>
-                            <tbody> <tr>
-                                <th v-for="(registro,i) in registros" v-if="i>=0 && i<8"  
-                                    class="h5 tablaRegistro" id="registro0" title="Registro R0"
-                                    style="padding-top:3px;padding-bottom:3px;text-align:center;">
-                                        {{registro.contenido}}        
-                                </th>
-                            </tr></tbody>
-                        </table>
-                        <table class="table table-bordered" id="row2">
-                            <thead><tr>
-                                <th v-for="(registro,i) in registros" v-if="i>=8 && i<16" 
-                                style="padding-top:3px;padding-bottom:3px;text-align:center;">
-                                    {{registro.nombre}}
-                                </th>
-                            </tr></thead>
-                            <tbody> <tr>
-                                <th v-for="(registro,i) in registros" v-if="i>=8 && i<16"  
-                                    class="h5 tablaRegistro" id="registro0" title="Registro R0"
-                                    style="padding-top:3px;padding-bottom:3px;text-align:center;">
-                                        {{registro.contenido}}        
-                                </th>
-                            </tr></tbody>
-                        </table>
+                        <registro-table-app :registros="registros" :inicio="0" :fin="8" id="row1"> 
+                        </registro-table-app>
+                        <registro-table-app :registros="registros" :inicio="8" :fin="16" id="row1"> 
+                        </registro-table-app>
                     </div>
                 </div>
                 <div class="panel panel-default" id="panelMemoria">
@@ -224,10 +198,28 @@
         </div>
     </script>
     <!--Panel Registros-->
-    <script type="text/x-template" id="registrosTemplate">
-        <th class="h5 tablaRegistro" id="registro0" title="Registro R0"
-        style="padding-top:3px;padding-bottom:3px;text-align:center;">00</th>           
+    <script type="text/x-template" id="registroTemplate">
+        <th
+            class="h5 tablaRegistro" :title="getTitulo">
+                {{registro.contenido}}       
+        </th>        
     </script>
+
+    <script type="text/x-template" id="registroTableTemplate">
+        <table class="table table-bordered">
+            <thead><tr>
+                <th v-for="(registro,i) in registros" v-if="enRango(i)" 
+                style="padding-top:3px;padding-bottom:3px;text-align:center;">
+                    {{registro.nombre}}
+                </th>
+            </tr></thead>
+            <tbody> <tr>
+               <th is="registro-app" v-for="(registro,i) in registros" 
+                :registro="registro" :index="i" v-if="enRango(i)">
+                </th>
+            </tr></tbody>
+        </table>
+    </script>       
 
     <!--Funciones-->
     

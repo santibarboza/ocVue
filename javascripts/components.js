@@ -1,5 +1,34 @@
 
 
+Vue.component('registro-app',{
+  template: '#registroTemplate',
+  props: ['registro', 'index'],
+  computed:{
+      getTitulo: function(){
+        return "Registro "+this.registro.nombre;
+      }
+  }  
+});
+
+
+Vue.component('registro-table-app',{
+  template: '#registroTableTemplate',
+  props: ['registros','inicio','fin'],
+  computed:{
+      getTitulo: function(){
+        return "Registro "+this.registro.nombre;
+      },
+      getTitulo: function(){
+        return "Registro "+this.registro.nombre;
+      }
+  },
+  methods:{
+      enRango: function(i){
+        return i>=this.inicio && i<this.fin;
+      }
+  }  
+});
+
 Vue.component('panelheading',{
   template: '#headingTemplate',
   props: ['targets', 'titulo'],
@@ -12,6 +41,7 @@ Vue.component('panelheading',{
       }
   }  
 });
+/*
 Vue.component('app-panel-registros',{
     template:"#panelRegistrosTemplate",
     data: function () {
@@ -33,7 +63,7 @@ Vue.component('app-panel-registros',{
       }
     }
 });
-
+*/
 var vm=new Vue({
   el:"#panelIde",
   data:{
