@@ -154,6 +154,15 @@ Vue.component('panellogs-app',{
       }
   }  
 });
+Vue.component('panelmemoria-app',{
+  template: '#memoriaPanelTemplate',
+  props: ['memorias'],
+  computed:{
+    getLogs: function(){
+        return this.logs;
+      }
+  }  
+});
 
 
 var vm=new Vue({

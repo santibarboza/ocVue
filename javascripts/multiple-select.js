@@ -742,9 +742,9 @@
         filterAcceptOnEnter: false,
         hideOptgroupCheckboxes: false,
 
-        selectAllText: 'Select all',
-        allSelected: 'All selected',
-        countSelected: '# of % selected',
+        selectAllText: 'Seleccionar Todas',
+        allSelected: 'Todas las Ventanas',
+        countSelected: '# de % Habilitadas',
         noMatchesFound: 'No matches found',
 
         styler: function () {

@@ -1,3 +1,8 @@
+
+$( document ).ready(function() {
+    $('#ventanas').selectpicker('selectAll');
+});
+
 function ocultarCode(){
     if(this.ver){
         this.ver=false;
