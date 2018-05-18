@@ -51,56 +51,9 @@
 		      <button type="button" class="btn btn-default col-md-6" id="detener">Detener Ejecución</button>
             </div>
         </div>
- 	    <div id="contenedorCode" class="col-xs-12 col-md-4">
-	    	<div class="panel panel-default" id="panelCode">
-	           <div class="panel-heading">
-	               <h3 class="panel-title">Codigo Fuente</h3>
-	           </div>
-        	    <div class="panel-body">
-        	        <form role="form">
-        		        <textarea id="sourceCode"
-        		          class="form-control source-code"
-        		          style="margin-bottom:5px;"
-        		          rows="20"
-        		          tab-support
-        		          select-line
-        		          ng-model="code">//aca iria el codigo fuente
-                        </textarea>
-        		        <div id="barraCompilar">
-        		          <h5 class="col-md-6" id="labeldirinicio">Direccion de Inicio:</h5>
-        		          <textarea id="dirInicio" class="col-md-2" rows="1" cols="2" maxlength="2">
-                          </textarea>
-        		          <button type="button" class="btn btn-default col-md-4" id="compilar">
-                            Compilar
-                          </button>
-        		        </div> 
-        	        </form>
-        	  </div>
-	</div>
-    </div>
-		<div id="contenedorCompilado" class="col-xs-12 col-md-3">
-		    <div class="panel panel-default" id="panelCompilado">
-	           <div class="panel-heading">
-	               <h3 class="panel-title">Codigo Compilado</h3>
-	            </div>
-	            <div class="panel-body">
-	               <form role="form">
-		                <textarea id="codigoCompilado"
-		                  rows="20"
-		                  ng-model="code"
-		                  readonly>
-                        </textarea>
-		                <div id="barraCompilar">
-		                    <select class="selectpicker col-md-8" id="tipoEjecucion">
-		                        <option>Todo el Código</option>
-                                <option>De a 1 Instrucción</option>
-                            </select>   
-                            <button type="button" class="btn btn-default col-md-4" id="ejecutar">Ejecutar</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
+ 	    <panelcode-app :panel="panelCode"></panelcode-app>
+        <panelcompilado-app :panel="panelCompilado"></panelcompilado-app>
+		
         <div id="contenedorSimulacion"  class="col-xs-12 col-md-5">
             <div id="panelSimulacion">
                 <div class="panel panel-default" id="panelRegistros">
@@ -238,7 +191,67 @@
         </table>
     </script>       
     
+    <!--CodigoCompilado-->
+    <script type="text/x-template" id="compiladoTemplate">
+        <div id="contenedorCompilado" class="col-xs-12" :class="getBigSize">
+            <div class="panel panel-default" id="panelCompilado">
+               <div class="panel-heading">
+                   <h3 class="panel-title">Codigo Compilado</h3>
+                </div>
+                <div class="panel-body">
+                   <form role="form">
+                        <textarea id="codigoCompilado"
+                          rows="20"
+                          v-model="panel.value"
+                          ng-model="code"
+                          readonly>
+                        </textarea>
+                        <div id="barraCompilar">
+                            <select class="selectpicker col-md-8" id="tipoEjecucion">
+                                <option>Todo el Código</option>
+                                <option>De a 1 Instrucción</option>
+                            </select>   
+                            <button type="button" class="btn btn-default col-md-4" id="ejecutar">Ejecutar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </script>   
 
+
+        
+    <!--CodigoCompilado-->
+    <script type="text/x-template" id="codeTemplate">
+        <div id="contenedorCode" class="col-xs-12" :class="getBigSize">
+            <div class="panel panel-default" id="panelCode">
+               <div class="panel-heading">
+                   <h3 class="panel-title">Codigo Fuente</h3>
+               </div>
+                <div class="panel-body">
+                    <form role="form">
+                        <textarea id="sourceCode"
+                          class="form-control source-code"
+                          style="margin-bottom:5px;"
+                          rows="20"
+                          tab-support
+                          select-line
+                          v-model="panel.value"
+                          ng-model="code">//aca iria el codigo fuente
+                        </textarea>
+                        <div id="barraCompilar">
+                          <h5 class="col-md-6" id="labeldirinicio">Direccion de Inicio:</h5>
+                          <textarea id="dirInicio" class="col-md-2" rows="1" cols="2" maxlength="2">
+                          </textarea>
+                          <button type="button" class="btn btn-default col-md-4" id="compilar">
+                            Compilar
+                          </button>
+                        </div> 
+                    </form>
+              </div>
+           </div>
+        </div>
+    </script>
     <!--Funciones-->
     
     <script src="javascripts/funciones.js" type="text/javascript"></script>

@@ -103,6 +103,32 @@ Vue.component('panelheading',{
       }
   }  
 });
+Vue.component('panelcompilado-app',{
+  template: '#compiladoTemplate',
+  props: ['panel'],
+  computed:{
+    getPanel: function(){
+        return this.panel;
+      },
+    getBigSize: function(){
+        return "col-md-"+this.panel.size;
+      },
+  }  
+});
+
+Vue.component('panelcode-app',{
+  template: '#codeTemplate',
+  props: ['panel'],
+  computed:{
+    getPanel: function(){
+        return this.panel;
+      },
+    getBigSize: function(){
+        return "col-md-"+this.panel.size;
+      },
+  }  
+});
+
 var vm=new Vue({
   el:"#panelIde",
   created:function () {
@@ -115,6 +141,14 @@ var vm=new Vue({
     }
   },
   data:{
+      panelCode:{
+        value:"aca iriael codigo fuente",
+        size:4
+      },
+      panelCompilado:{
+        value:"aca iria el codigo", 
+        size:3
+      },
       registros:[],
       memorias:[]
   },
