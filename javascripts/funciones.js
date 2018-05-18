@@ -1,8 +1,11 @@
 
 $( document ).ready(function() {
     $('#ventanas').selectpicker('selectAll');
+ $("select").on("changed.bs.select", 
+      function(e, clickedIndex, newValue, oldValue) {
+    console.log(this.value, clickedIndex, newValue)
 });
-
+});
 function ocultarCode(){
     if(this.ver){
         this.ver=false;

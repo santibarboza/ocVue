@@ -196,7 +196,7 @@ var vm=new Vue({
   },
   methods:{
       updateRegistros: function(cambios){
-        var registros=this.registros;
+        var registros=this.panelSimulacion.registros;
         var keys=[];
         $.each(cambios, function( index, cambio ) {
             registros[cambio.key].contenido=cambio.value;
@@ -205,7 +205,7 @@ var vm=new Vue({
         EventBus.$emit('ultimoCambioRegistro', keys);
     },
     updateMemoria: function(cambios){
-        var memorias=this.memorias;
+        var memorias=this.panelSimulacion.memorias;
         var keys=[];
         $.each(cambios, function( index, cambio ) {
             memorias[cambio.key].contenido=cambio.value;
@@ -214,10 +214,10 @@ var vm=new Vue({
         EventBus.$emit('ultimoCambioMemoria', keys);
     },
     updatePC: function(pc){
-        EventBus.$emit('nuevopc', pc);
+        EventBus.$emit('nuevopc', pc.pc);
     },
     updateIR: function(ir){
-        EventBus.$emit('nuevoir', ir);
+        EventBus.$emit('nuevoir', ir.ir);
     }
   }
 });
