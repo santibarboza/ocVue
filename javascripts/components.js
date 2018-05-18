@@ -34,6 +34,10 @@ Vue.component('registro-table-app',{
   }  
 });
 
+Vue.component('registro-panel-app',{
+  template: '#registroPanelTemplate',
+  props: ['registros']  
+});
 Vue.component('memoria-app',{
   template: '#memoriaTemplate',
   props: ['memoria', 'index'],
@@ -129,15 +133,38 @@ Vue.component('panelcode-app',{
   }  
 });
 
+Vue.component('panelsimulacion-app',{
+  template: '#simulacionTemplate',
+  props: ['panel'],
+  computed:{
+    getPanel: function(){
+        return this.panel;
+      },
+    getBigSize: function(){
+        return "col-md-"+this.panel.size;
+      },
+  }  
+});
+Vue.component('panellogs-app',{
+  template: '#logsTemplate',
+  props: ['logs'],
+  computed:{
+    getLogs: function(){
+        return this.logs;
+      }
+  }  
+});
+
+
 var vm=new Vue({
   el:"#panelIde",
   created:function () {
     var i;
     for (i = 0; i < 16; i++) {
-      this.registros.push({contenido:"00"});
+      this.panelSimulacion.registros.push({contenido:"00"});
     } 
     for (i = 0; i < 256; i++) {
-      this.memorias.push({contenido:"00"});
+      this.panelSimulacion.memorias.push({contenido:"00"});
     }
   },
   data:{
@@ -149,8 +176,14 @@ var vm=new Vue({
         value:"aca iria el codigo", 
         size:3
       },
-      registros:[],
-      memorias:[]
+      panelSimulacion:{
+        size:5,
+        registros:[],
+        memorias:[],
+        logs:{
+          value:"aca se mostrarian los logs"
+        }
+      }
   },
   methods:{
       updateRegistros: function(cambios){
@@ -180,72 +213,3 @@ var vm=new Vue({
   }
 });
 
-
-/*
-var panelMemoria, contenedorCode,contenedorCompilado,contenedorSimulacion;
-
-
-contenedorCode = new Vue({
-  el: '#contenedorCode',
-  data: {
-    ver: true,
-    bigSize:'col-md-4'
-  },
-  methods: {
-    ocultar:ocultarCode,
-    mostrar:mostrarCode
-  }
-})
-contenedorCompilado = new Vue({
-  el: '#contenedorCompilado',
-  data: {
-    ver: true,
-    bigSize:'col-md-3',
-    texto:"Aca iria el codigo compilado"
-  },
-  methods: {
-    ocultar:ocultarCompilado,
-    mostrar:mostrarCompilado
-  }
-})
-contenedorSimulacion = new Vue({
-  el: '#contenedorSimulacion',
-  data: {
-    ver: true,
-    bigSize:'col-md-5',
-    paneles:2,   
-    panelesArray:[panelRegistros,panelMemoria]
-  },
-  methods: {
-    ocultar:ocultarSimulacion,
-    mostrar:mostrarSimulacion,
-    setCompilado:setCodigoCompilado        
-  }
-})
-var ventanasArray={"0":contenedorCode,"1":contenedorCompilado,"2":contenedorSimulacion};
-
-$( document ).ready(function() {
-    $('#ventanas').multipleSelect({
-    placeholder:"Ventanas Habilitadas",
-    minimumCountSelected:2,
-    countSelected:"# Ventanas Habilitadas",
-    selectAll: false,
-    onClick: function(view) {
-                if(view.checked)
-                    ventanasArray[view.value].mostrar();
-                else
-                   ventanasArray[view.value].ocultar();
-            },
-    onCheckAll: function() {
-                for(componente in ventanasArray)
-                    componente.mostrar();
-            },
-    onUncheckAll: function() {
-                for(componente in ventanasArray)
-                    componente.ocultar();
-            }
-});
-$('#ventanas').multipleSelect('checkAll');
-});
-
-*/

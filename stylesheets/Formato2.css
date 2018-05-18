@@ -113,6 +113,9 @@ font-weight: 400;
 }
 #codigoCompilado{
     width:100%;
+    background-color: #ddd;
+    border: 0px;
+    padding: 10px 20px;
 }
 /** =====================
  * Responsive

@@ -53,45 +53,9 @@
         </div>
  	    <panelcode-app :panel="panelCode"></panelcode-app>
         <panelcompilado-app :panel="panelCompilado"></panelcompilado-app>
-		
-        <div id="contenedorSimulacion"  class="col-xs-12 col-md-5">
-            <div id="panelSimulacion">
-                <div class="panel panel-default" id="panelRegistros">
-                    <panelheading targets="#bodyRegistro" titulo="Registros del Procesador"></panelheading>
-                    <div class="panel-body collapse in" id="bodyRegistro">
-                        <registro-table-app :registros="registros" :inicio="0" :fin="8" id="row1"> 
-                        </registro-table-app>
-                        <registro-table-app :registros="registros" :inicio="8" :fin="16" id="row1"> 
-                        </registro-table-app>
-                    </div>
-                </div>
-                <div class="panel panel-default" id="panelMemoria">
-                    <panelheading targets="#bodyMemoria" titulo="Memoria del Sistema"></panelheading>
-                    <div class="panel-body collapse" id="bodyMemoria">
-                        <memoria-table-app :memorias="memorias" :cantxfilas="16" id="tablaMemoria"> 
-                        </memoria-table-app>
-                    </div>
-                </div>
-                <div class="panel panel-default" id="panelLogs">
-                    <panelheading targets="#bodyLog" titulo="Logs del Sistema"></panelheading>
-                    <div class="panel-body collapse" id="bodyLog">
-                        <table class="table table-bordered" id="tablaMemoria">
-                            <tbody>
-                                <textarea id="Logs"
-                		          class="form-control source-code"
-                		          style="margin-bottom:5px;"
-                		          rows="5"
-                		          tab-support
-                		          select-line
-                		          ng-model="code"
-                		          readonly>//Aca se mostrarian los logs</textarea>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+        <panelsimulacion-app :panel="panelSimulacion"></panelsimulacion-app>
+	</div>
+        
     <footer class="link-footer" id="link-footer">
         <div class="width-wrapper" id="link-footer-width-wrapper">
             <div class=".col-md-8" id="linksFooter">
@@ -202,9 +166,9 @@
                    <form role="form">
                         <textarea id="codigoCompilado"
                           rows="20"
-                          v-model="panel.value"
                           ng-model="code"
-                          readonly>
+                          v-model="panel.value"
+                          readonly>     
                         </textarea>
                         <div id="barraCompilar">
                             <select class="selectpicker col-md-8" id="tipoEjecucion">
@@ -252,6 +216,59 @@
            </div>
         </div>
     </script>
+
+    <!--Panel Simulacion-->
+    <script type="text/x-template" id="simulacionTemplate">
+        <div id="contenedorSimulacion"  class="col-xs-12" :class="getBigSize">
+                <div id="panelSimulacion">
+                    <registro-panel-app :registros="panel.registros"></registro-panel-app>
+                    <div class="panel panel-default" id="panelMemoria">
+                        <panelheading targets="#bodyMemoria" titulo="Memoria del Sistema"></panelheading>
+                        <div class="panel-body collapse" id="bodyMemoria">
+                            <memoria-table-app :memorias="panel.memorias" :cantxfilas="16" id="tablaMemoria"> 
+                            </memoria-table-app>
+                        </div>
+                    </div>
+                    <panellogs-app :logs="panel.logs"></panellogs-app>
+                </div>
+            </div>
+    </script>
+
+    <!--Panel de Registros-->
+    <script type="text/x-template" id="registroPanelTemplate">
+        <div class="panel panel-default" id="panelRegistros">
+            <panelheading targets="#bodyRegistro" titulo="Registros del Procesador"></panelheading>
+            <div class="panel-body collapse in" id="bodyRegistro">
+                <registro-table-app :registros="registros" :inicio="0" :fin="8" id="row1"> 
+                </registro-table-app>
+                <registro-table-app :registros="registros" :inicio="8" :fin="16" id="row1"> 
+                </registro-table-app>
+            </div>
+        </div>
+    </script>
+
+    |<!--Panel de Registros-->
+    <script type="text/x-template" id="logsTemplate">
+        <div class="panel panel-default" id="panelLogs">
+            <panelheading targets="#bodyLog" titulo="Logs del Sistema"></panelheading>
+            <div class="panel-body collapse" id="bodyLog">
+                <table class="table table-bordered" id="tablaMemoria">
+                    <tbody>
+                        <textarea id="Logs"
+                          class="form-control source-code"
+                          style="margin-bottom:5px;"
+                          rows="5"
+                          tab-support
+                          select-line
+                          ng-model="code"
+                          v-model="logs.value"
+                          readonly></textarea>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </script>
+
     <!--Funciones-->
     
     <script src="javascripts/funciones.js" type="text/javascript"></script>
