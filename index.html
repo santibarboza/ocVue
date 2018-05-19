@@ -54,9 +54,9 @@
 		      <button type="button" class="btn btn-default col-md-6" id="detener">Detener Ejecución</button>
             </div>
         </div>
- 	    <panelcode-app :panel="panelCode"></panelcode-app>
-        <panelcompilado-app :panel="panelCompilado"></panelcompilado-app>
-        <panelsimulacion-app :panel="panelSimulacion"></panelsimulacion-app>
+ 	    <panelcode-app :panel="panelCode" v-if="panelCode.ver"></panelcode-app>
+        <panelcompilado-app :panel="panelCompilado" v-if="panelCompilado.ver"></panelcompilado-app>
+        <panelsimulacion-app :panel="panelSimulacion" v-if="panelSimulacion.ver"></panelsimulacion-app>
 	</div>
         
     <footer class="link-footer" id="link-footer">

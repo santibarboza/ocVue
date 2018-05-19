@@ -1,14 +1,8 @@
 
-$( document ).ready(function() {
-    $('#ventanas').selectpicker('selectAll');
- $("select").on("changed.bs.select", 
-      function(e, clickedIndex, newValue, oldValue) {
-    console.log(this.value, clickedIndex, newValue)
-});
-});
+
 function ocultarCode(){
-    if(this.ver){
-        this.ver=false;
+    if(vm.panelCode.ver){
+        vm.panelCode.ver=false;
         if(contenedorCompilado.ver && contenedorSimulacion.ver){
             contenedorCompilado.bigSize='col-md-4';
             contenedorSimulacion.bigSize='col-md-8';
@@ -89,7 +83,4 @@ function mostrarSimulacion(){
                 }else
                     this.bigSize='col-md-12';
    }
-}
-function setCodigoCompilado(res){
-   $("#codigoCompilado")[0].value=res;
 }

@@ -179,14 +179,17 @@ var vm=new Vue({
   data:{
       panelCode:{
         value:"aca iriael codigo fuente",
-        size:4
+        size:4,
+        ver:true
       },
       panelCompilado:{
         value:"aca iria el codigo", 
-        size:3
+        size:3,
+        ver:true
       },
       panelSimulacion:{
         size:5,
+        ver:true,
         registros:[],
         memorias:[],
         logs:{
@@ -218,7 +221,18 @@ var vm=new Vue({
     },
     updateIR: function(ir){
         EventBus.$emit('nuevoir', ir.ir);
+    },
+    updateSizePaneles: function(cambio){
+        EventBus.$emit('cambioSizePanel', ir.ir);
+      
     }
   }
 });
 
+$( document ).ready(function() {
+  $('#ventanas').selectpicker('selectAll');
+  $("select").on("changed.bs.select", 
+    function(e, clickedIndex, newValue, oldValue) {
+      console.log(this.value, clickedIndex, newValue)
+  });
+});
