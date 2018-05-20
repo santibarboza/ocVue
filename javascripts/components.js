@@ -1,5 +1,6 @@
 var EventBus = new Vue;
 
+//Componente de Registro
 Vue.component('registro-app',{
   template: '#registroTemplate',
   props: ['registro', 'index'],
@@ -20,7 +21,7 @@ Vue.component('registro-app',{
   }  
 });
 
-
+//Componente Tabla de Registro
 Vue.component('registro-table-app',{
   template: '#registroTableTemplate',
   props: ['registros','inicio','fin'],
@@ -34,10 +35,13 @@ Vue.component('registro-table-app',{
   }  
 });
 
+//Componente Panel de Registros
 Vue.component('registro-panel-app',{
   template: '#registroPanelTemplate',
   props: ['registros']  
 });
+
+//Componente Memoria
 Vue.component('memoria-app',{
   template: '#memoriaTemplate',
   props: ['memoria', 'index'],
@@ -73,6 +77,7 @@ Vue.component('memoria-app',{
   }  
 });
 
+//Componente Tabla de Memoria
 Vue.component('memoria-table-app',{
   template: '#memoriaTableTemplate',
   props: ['memorias','cantxfilas'], 
@@ -95,6 +100,29 @@ Vue.component('memoria-table-app',{
   }
 });
 
+//Componente Panel de Memoria
+Vue.component('panelmemoria-app',{
+  template: '#memoriaPanelTemplate',
+  props: ['memorias'],
+  computed:{
+    getLogs: function(){
+        return this.logs;
+      }
+  }  
+});
+
+//Componente Panel de Logs
+Vue.component('panellogs-app',{
+  template: '#logsTemplate',
+  props: ['logs'],
+  computed:{
+    getLogs: function(){
+        return this.logs;
+      }
+  }  
+});
+
+//Componente Heading de Panel
 Vue.component('panelheading',{
   template: '#headingTemplate',
   props: ['targets', 'titulo'],
@@ -107,35 +135,11 @@ Vue.component('panelheading',{
       }
   }  
 });
-Vue.component('panelcompilado-app',{
-  template: '#compiladoTemplate',
-  props: ['panel'],
-  computed:{
-    getPanel: function(){
-        return this.panel;
-      },
-    getBigSize: function(){
-        return "col-md-"+this.panel.size;
-      },
-  }  
-});
 
-Vue.component('panelcode-app',{
-  template: '#codeTemplate',
-  props: ['panel'],
-  computed:{
-    getPanel: function(){
-        return this.panel;
-      },
-    getBigSize: function(){
-        return "col-md-"+this.panel.size;
-      },
-  }  
-});
-
+//Componente Panel de Simulacion
 Vue.component('panelsimulacion-app',{
   template: '#simulacionTemplate',
-  props: ['panel'],
+  props: ['panel','index'],
   computed:{
     getPanel: function(){
         return this.panel;
@@ -143,28 +147,65 @@ Vue.component('panelsimulacion-app',{
     getBigSize: function(){
         return "col-md-"+this.panel.size;
       },
-  }  
-});
-Vue.component('panellogs-app',{
-  template: '#logsTemplate',
-  props: ['logs'],
-  computed:{
-    getLogs: function(){
-        return this.logs;
-      }
-  }  
-});
-Vue.component('panelmemoria-app',{
-  template: '#memoriaPanelTemplate',
-  props: ['memorias'],
-  computed:{
-    getLogs: function(){
-        return this.logs;
-      }
+  } ,
+  created: function () {
+    EventBus.$on('cambioSizePanel', function (cambios) {
+      if(cambios.index == this.index)
+        this.panel.ver=cambios.ver;
+    }.bind(this));
+    EventBus.$on('newSize', function (sizes) {
+        this.panel.size=sizes[this.index];
+    }.bind(this));
   }  
 });
 
+//Componente Panel de Compilacion
+Vue.component('panelcompilado-app',{
+  template: '#compiladoTemplate',
+  props: ['panel','index'],
+  computed:{
+    getPanel: function(){
+        return this.panel;
+      },
+    getBigSize: function(){
+        return "col-md-"+this.panel.size;
+      },
+  },
+  created: function () {
+    EventBus.$on('cambioSizePanel', function (cambios) {
+      if(cambios.index == this.index)
+        this.panel.ver=cambios.ver;
+    }.bind(this));
+    EventBus.$on('newSize', function (sizes) {
+        this.panel.size=sizes[this.index];
+    }.bind(this));
+  }   
+});
 
+//Componente Panel de Codigo
+Vue.component('panelcode-app',{
+  template: '#codeTemplate',
+  props: ['panel','index'],
+  computed:{
+    getPanel: function(){
+        return this.panel;
+      },
+    getBigSize: function(){
+        return "col-md-"+this.panel.size;
+      },
+  },
+  created: function () {
+    EventBus.$on('cambioSizePanel', function (cambios) {
+      if(cambios.index == this.index)
+        this.panel.ver=cambios.ver;
+    }.bind(this));
+    EventBus.$on('newSize', function (sizes) {
+        this.panel.size=sizes[this.index];
+    }.bind(this));
+  }    
+});
+
+//Objeto Vue Principal
 var vm=new Vue({
   el:"#panelIde",
   created:function () {
@@ -222,17 +263,59 @@ var vm=new Vue({
     updateIR: function(ir){
         EventBus.$emit('nuevoir', ir.ir);
     },
-    updateSizePaneles: function(cambio){
-        EventBus.$emit('cambioSizePanel', ir.ir);
-      
+    updateSizePaneles: function(index,ver){
+        this.getPanel(index).ver=ver;
+        this.updateSizes();
+    },
+    getPanel:function(i){
+      switch(i){
+        case 0:
+          return this.panelCode;
+        case 1:
+          return this.panelCompilado;
+        case 2:
+          return this.panelSimulacion;
+      }
+    },
+    updateSizes: function(){
+        var opcion=0;
+        if(this.panelSimulacion.ver) opcion+=1;
+        if(this.panelCompilado.ver) opcion+=2;
+        if(this.panelCode.ver) opcion+=4;
+
+        switch(opcion){
+          case 1:
+            EventBus.$emit('newSize', [0,0,12]);
+            break;
+          case 2:
+            EventBus.$emit('newSize', [0,0,12]);
+            break;
+          case 3:
+            EventBus.$emit('newSize', [0,4,8]);
+            break;
+          case 4:
+            EventBus.$emit('newSize', [12,0,0]);
+            break;
+          case 5:
+            EventBus.$emit('newSize', [7,0,5]);
+            break;
+          case 6:
+            EventBus.$emit('newSize', [8,4,0]);
+            break;
+          case 7:
+            EventBus.$emit('newSize', [4,3,5]);
+            break;
+        }
+      }
     }
-  }
 });
 
+//Configuracion de Seleccion de Ventanas
 $( document ).ready(function() {
   $('#ventanas').selectpicker('selectAll');
   $("select").on("changed.bs.select", 
     function(e, clickedIndex, newValue, oldValue) {
-      console.log(this.value, clickedIndex, newValue)
+      vm.updateSizePaneles(clickedIndex,newValue);
+      console.log(clickedIndex, newValue);
   });
 });
