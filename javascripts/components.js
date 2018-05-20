@@ -305,6 +305,9 @@ $( document ).ready(function() {
   $('#ventanas').selectpicker('selectAll');
   $("select").on("changed.bs.select", 
     function(e, clickedIndex, newValue, oldValue) {
-      vm.updateSizePaneles(clickedIndex,newValue);
+      if(e.currentTarget.id=="ventanas")
+        vm.updateSizePaneles(clickedIndex,newValue);
+      else
+        console.log("Tipos de Ejecucion:"+clickedIndex+"-"+newValue);
   });
 });
