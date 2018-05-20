@@ -200,6 +200,7 @@ Vue.component('panelcode-app',{
         this.panel.ver=cambios.ver;
     }.bind(this));
     EventBus.$on('newSize', function (sizes) {
+      if(this.panel.size!=sizes[this.index])
         this.panel.size=sizes[this.index];
     }.bind(this));
   }    
@@ -236,7 +237,17 @@ var vm=new Vue({
         logs:{
           value:"aca se mostrarian los logs"
         }
-      }
+      },
+      distribucionVentanas:[
+        [0,0,0],  //0- no hayVentanas
+        [0,0,12], //1- Panel Simulacion
+        [0,12,0], //2- Panel Compilado
+        [0,4,8],  //3- Panel Simulacion y Panel Compilado
+        [12,0,0], //4- Panel Code
+        [7,0,5],  //5- Panel Code y Panel Simulacion
+        [8,4,0],  //6- Panel Code y Panel Compilado
+        [4,3,5]   //7- Los 3 Paneles
+      ]
   },
   methods:{
       updateRegistros: function(cambios){
@@ -282,32 +293,11 @@ var vm=new Vue({
         if(this.panelSimulacion.ver) opcion+=1;
         if(this.panelCompilado.ver) opcion+=2;
         if(this.panelCode.ver) opcion+=4;
+        EventBus.$emit('newSize', this.distribucionVentanas[opcion]);
 
-        switch(opcion){
-          case 1:
-            EventBus.$emit('newSize', [0,0,12]);
-            break;
-          case 2:
-            EventBus.$emit('newSize', [0,0,12]);
-            break;
-          case 3:
-            EventBus.$emit('newSize', [0,4,8]);
-            break;
-          case 4:
-            EventBus.$emit('newSize', [12,0,0]);
-            break;
-          case 5:
-            EventBus.$emit('newSize', [7,0,5]);
-            break;
-          case 6:
-            EventBus.$emit('newSize', [8,4,0]);
-            break;
-          case 7:
-            EventBus.$emit('newSize', [4,3,5]);
-            break;
-        }
-      }
+        
     }
+  }
 });
 
 //Configuracion de Seleccion de Ventanas
@@ -316,6 +306,5 @@ $( document ).ready(function() {
   $("select").on("changed.bs.select", 
     function(e, clickedIndex, newValue, oldValue) {
       vm.updateSizePaneles(clickedIndex,newValue);
-      console.log(clickedIndex, newValue);
   });
 });
