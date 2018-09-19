@@ -209,6 +209,39 @@ Vue.component('panelcode-app',{
     Compilar:function(){
       var data={"codigoFuente":this.panel.value, "direccionInicio": this.panel.direccionInicio};
 
+      var settings = {
+          'cache': false,
+          'dataType': "jsonp",
+          "async": true,
+          "crossDomain": true,
+          "url": "https://ocuns-server.herokuapp.com/test3",
+          "method": "GET",
+          "headers": {
+              "accept": "application/json",
+              "Access-Control-Allow-Origin":"*"
+          },
+          data: JSON.stringify(data),
+      }
+
+      $.ajax(settings).done(function (response) {
+          console.log(response);
+
+      });
+
+
+
+      $.ajax({
+        type: "GET",
+        crossDomain: true,
+        url: "https://ocuns-server.herokuapp.com/test3",
+        dataType: "jsonp",
+        contentType: "application/json; charset=utf-8",
+        success: function(data,textStatus){
+          console.log("data: "+JSON.stringify(data));
+          console.log("textStatus: "+textStatus);
+        }
+        
+      });
       console.log("Codigo Fuente: "+this.panel.value);
       console.log("Direccion de Inicio: "+this.panel.direccionInicio);
     }
