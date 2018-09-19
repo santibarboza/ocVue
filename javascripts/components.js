@@ -1,4 +1,5 @@
 var EventBus = new Vue;
+var idUsuario="IdDefault";
 
 //Componente de Registro
 Vue.component('registro-app',{
@@ -203,7 +204,15 @@ Vue.component('panelcode-app',{
       if(this.panel.size!=sizes[this.index])
         this.panel.size=sizes[this.index];
     }.bind(this));
-  }    
+  },
+  methods:{
+    Compilar:function(){
+      var data={"codigoFuente":this.panel.value, "direccionInicio": this.panel.direccionInicio};
+
+      console.log("Codigo Fuente: "+this.panel.value);
+      console.log("Direccion de Inicio: "+this.panel.direccionInicio);
+    }
+  }      
 });
 
 //Objeto Vue Principal
