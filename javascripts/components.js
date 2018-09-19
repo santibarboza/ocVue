@@ -220,16 +220,10 @@ Vue.component('panelcode-app',{
          console.log("data: "+JSON.stringify(data));
           console.log("textStatus: "+textStatus);
         }
-        
+        error:function(data){
+          console.log("Error "+data);
+        }
       });
-      $.ajax({
-  method: "POST",
-  url: "some.php",
-  data: { name: "John", location: "Boston" }
-})
-  .done(function( msg ) {
-    alert( "Data Saved: " + msg );
-  });
       console.log("Codigo Fuente: "+this.panel.value);
       console.log("Direccion de Inicio: "+this.panel.direccionInicio);
     }
