@@ -211,7 +211,7 @@ Vue.component('panelcode-app',{
 
       $.ajax({
         type: "GET",
-        crossDomain: true,
+ //       crossDomain: true,
         url: "https://ocuns-server.herokuapp.com/test3",
         dataType: "json",
         contentType: "application/json; charset=utf-8",
