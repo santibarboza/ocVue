@@ -220,7 +220,8 @@ var vm=new Vue({
   },
   data:{
       panelCode:{
-        value:"aca iriael codigo fuente",
+        value:"aca iria T el codigo fuente",
+        direccionInicio:"00",
         size:4,
         ver:true
       },
