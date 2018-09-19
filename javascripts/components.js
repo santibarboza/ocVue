@@ -214,15 +214,16 @@ Vue.component('panelcode-app',{
         crossDomain: true,
         url: "https://ocuns-server.herokuapp.com/test3",    
         headers:{
-          contentType: "application/json; charset=utf-8"
+          contentType: "application/json; charset=utf-8",
+          Access-Control-Allow-Origin:"*"
         },
         success: function(data,textStatus){
          console.log("data: "+JSON.stringify(data));
           console.log("textStatus: "+textStatus);
         },
-        //error:function(data){
-        //  console.log("Error "+data);
-        //}
+        error:function(textStatus,errorThrown){
+          console.log("Error "+errorThrown+"... "+textStatus);
+        }
       });
       console.log("Codigo Fuente: "+this.panel.value);
       console.log("Direccion de Inicio: "+this.panel.direccionInicio);
