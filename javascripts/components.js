@@ -219,7 +219,7 @@ Vue.component('panelcode-app',{
         success: function(data,textStatus){
          console.log("data: "+JSON.stringify(data));
           console.log("textStatus: "+textStatus);
-        }
+        },
         error:function(data){
           console.log("Error "+data);
         }
