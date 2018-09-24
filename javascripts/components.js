@@ -207,12 +207,12 @@ Vue.component('panelcode-app',{
   },
   methods:{
     Compilar:function(){
-      var data={"codigoFuente":this.panel.value, "direccionInicio": this.panel.direccionInicio};
+      //var data={"codigoFuente":this.panel.value, "direccionInicio": this.panel.direccionInicio};
 
       $.ajax({
         method: "GET",
         crossDomain: true,
-        url: "https://ocuns-server.herokuapp.com/test3",    
+        url: "https://cors-test-java.herokuapp.com/greeting-javaconfig",    
         headers:{
           contentType: "application/json; charset=utf-8",
           Access-Control-Allow-Origin:"*"
