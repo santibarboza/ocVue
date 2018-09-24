@@ -215,7 +215,6 @@ Vue.component('panelcode-app',{
         url: "https://cors-test-java.herokuapp.com/greeting-javaconfig",    
         headers:{
           contentType: "application/json; charset=utf-8",
-          Access-Control-Allow-Origin:"*"
         },
         success: function(data,textStatus){
          console.log("data: "+JSON.stringify(data));
