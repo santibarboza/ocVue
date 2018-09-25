@@ -214,14 +214,14 @@ Vue.component('panelcode-app',{
         crossDomain: true,
         url: "https://cors-test-java.herokuapp.com/greeting-javaconfig",    
         headers:{
-          contentType: "application/json; charset=utf-8",
+          contentType: "text/plain; charset=utf-8",
         },
         success: function(data,textStatus){
          console.log("data: "+JSON.stringify(data));
           console.log("textStatus: "+textStatus);
         },
         error:function(textStatus,errorThrown){
-          console.log("Error "+errorThrown+"... "+textStatus);
+          console.log("EError "+errorThrown+"... "+textStatus);
         }
       });
       console.log("Codigo Fuente: "+this.panel.value);
